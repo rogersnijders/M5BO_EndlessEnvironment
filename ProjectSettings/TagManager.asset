@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - PlayerCollider
   layers:
   - Default
   - TransparentFX
@@ -40,4 +41,19 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Achtergrond_Vast
+    uniqueID: 4003690967
+    locked: 0
+  - name: Achtergrond
+    uniqueID: 126312381
+    locked: 0
+  - name: Middenplan
+    uniqueID: 219354825
+    locked: 0
+  - name: Playerlevel
+    uniqueID: 2715062387
+    locked: 0
+  - name: Voorgrond
+    uniqueID: 338301737
     locked: 0
