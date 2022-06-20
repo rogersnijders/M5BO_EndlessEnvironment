@@ -61,7 +61,6 @@ public class PlatformerPlayerMovement : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Space) && Grounded)
         {
-          anim.SetTrigger("TakeOff");
           //anim.SetBool("isJumping", false);
           rb.velocity = new Vector2(rb.velocity.x, 0);
           rb.velocity = new Vector2(rb.velocity.x, JumpSpeed);
