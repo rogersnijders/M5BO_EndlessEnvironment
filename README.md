@@ -1,2 +1,2 @@
-# MyMovement
-Unity project to test movement for Endless Environment project GA2 
+# M1BO - Endless Environment
+Unity project voor GA2  
