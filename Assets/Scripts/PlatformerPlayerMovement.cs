@@ -5,8 +5,10 @@ using UnityEngine;
 public class PlatformerPlayerMovement : MonoBehaviour
 {
     private Rigidbody2D rb;
+    private CapsuleCollider2D cc;
     private bool Grounded;
     private bool isJumping;
+    
 
     private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 
@@ -22,6 +24,7 @@ public class PlatformerPlayerMovement : MonoBehaviour
     Vector3 RayPositionLeft;
     Vector3 RayPositionRight;
 
+
     RaycastHit2D[] GroundHitsCenter;
     RaycastHit2D[] GroundHitsLeft;
     RaycastHit2D[] GroundHitsRight;
@@ -32,6 +35,8 @@ public class PlatformerPlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        cc = GetComponent<CapsuleCollider2D>();
+
     }
 
     private void Update()
