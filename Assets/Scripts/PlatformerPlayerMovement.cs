@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,12 +8,13 @@ public class PlatformerPlayerMovement : MonoBehaviour
     private bool Grounded;
     private bool isJumping;
     private bool m_FacingRight = true; // For determining which way the player is currently facing.
+
     private Animator anim;
 
     [SerializeField] private float MovementSpeed;
     [SerializeField] private float JumpSpeed;
-    [SerializeField] private float RayLength;
-    [SerializeField] private float RayPositionOffset;
+    private float RayLength; // made hidden for inspector
+    private float RayPositionOffset; // made hidden for inspector
 
     Vector2 RayPositionCenter;
     Vector2 RayPositionLeft;
@@ -24,10 +25,14 @@ public class PlatformerPlayerMovement : MonoBehaviour
     RaycastHit2D[] GroundHitsRight;
     RaycastHit2D[][] AllRaycastHits = new RaycastHit2D[3][];
 
+    CapsuleCollider2D capsuleComponent;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        capsuleComponent = this.GetComponent<CapsuleCollider2D>();
+
     }
 
     private void Update()
@@ -59,7 +64,6 @@ public class PlatformerPlayerMovement : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Space) && Grounded)
         {
-            //anim.SetBool("isJumping", false);
             rb.velocity = new Vector2(rb.velocity.x, 0);
             rb.velocity = new Vector2(rb.velocity.x, JumpSpeed);
         }
@@ -94,15 +98,34 @@ public class PlatformerPlayerMovement : MonoBehaviour
         transform.localScale = Scaler;
     }
 
+    private void Start() //Declare RayPositionOffset & Raylength and write them to console
+    {
+        RayPositionOffset = capsuleComponent.size.x * (float)0.5; // removed redundunt "+ (float)0.05"
+        RayLength = (float)capsuleComponent.size.y * (float)0.5 + (float)0.05;
+        Debug.Log("RayLength = " + RayLength);
+        Debug.Log("RayPositionOffset = " + RayPositionOffset);
+    }
+
     private void Jump()
     {
         var position = transform.position;
 
-        // RayPositionCenter = transform.position + new Vector3(0, RayLength * .5f, 0);
-        // RayPositionLeft = transform.position + new Vector3(-RayPositionOffset, RayLength * .5f, 0);
-        // RayPositionRight = transform.position + new Vector3(RayPositionOffset, RayLength * .5f, 0);
-        RayPositionLeft = new Vector2(position.x - RayPositionOffset, position.y);
-        RayPositionRight = new Vector2(position.x + RayPositionOffset, position.y);
+
+        // Moved to Start() so it is only declared once
+        //RayPositionOffset = capsuleComponent.size.x * (float)0.5; // removed redundunt "+ (float)0.05"
+        //RayLength = (float)capsuleComponent.size.y * (float)0.5 + (float)0.05;
+
+
+        // Old RayPositions
+        //RayPositionLeft = new Vector2(position.x - RayPositionOffset, position.y);
+        //RayPositionRight = new Vector2(position.x + RayPositionOffset, position.y);
+
+
+        // New RayPositions >> takes offset for dynamic heigth
+        // Also added RayPositionCenter
+        RayPositionCenter = new Vector2(position.x, position.y + (float)capsuleComponent.offset.y); // added
+        RayPositionLeft = new Vector2(position.x - RayPositionOffset, position.y + (float)capsuleComponent.offset.y); //Dynamic position.y
+        RayPositionRight = new Vector2(position.x + RayPositionOffset, position.y + (float)capsuleComponent.offset.y); //Dynamic position.y
 
         GroundHitsCenter = Physics2D.RaycastAll(position, -Vector2.up, RayLength);
         GroundHitsLeft = Physics2D.RaycastAll(RayPositionLeft, -Vector2.up, RayLength);

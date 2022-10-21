@@ -82,13 +82,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2386227182741759941}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df789e316e4a3432983aabbafbc0493a, type: 3}
+  m_Script: {fileID: 11500000, guid: 4bab1c703576f487f9a7bb4537d19c9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MovementSpeed: 500
   JumpSpeed: 15
-  RayLength: 0.6
-  RayPositionOffset: 0.5
 --- !u!212 &1026229050
 SpriteRenderer:
   m_ObjectHideFlags: 0
